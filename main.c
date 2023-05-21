@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Função para criar um novo nó da KD-Tree
 no *criarNo(void *data, float latitude, float longitude) {
   no *novoNo = (no *)malloc(sizeof(no));
   novoNo->data = data;
@@ -14,7 +13,6 @@ no *criarNo(void *data, float latitude, float longitude) {
   return novoNo;
 }
 
-// Função para inserir um nó na KD-Tree
 no *inserirNo(no *raiz, void *data, float latitude, float longitude,
               int profundidade) {
   if (raiz == NULL) {
@@ -23,7 +21,7 @@ no *inserirNo(no *raiz, void *data, float latitude, float longitude,
 
   int dimensaoAtual =
       profundidade %
-      2; // Alternando entre latitude (0) e longitude (1) para pontos 2D
+      2; 
   ponto *pontoAtual = raiz->pontoNo;
 
   if (dimensaoAtual == 0) {
@@ -47,7 +45,6 @@ no *inserirNo(no *raiz, void *data, float latitude, float longitude,
   return raiz;
 }
 
-// Função para encontrar o sucessor e o predecessor mais próximos na KD-Tree
 void encontrarSucessorEPredecessor(no *raiz, float latitude, float longitude,
                                    no **successor, no **predecessor,
                                    int profundidade) {
@@ -57,7 +54,6 @@ void encontrarSucessorEPredecessor(no *raiz, float latitude, float longitude,
 
   ponto *pontoAtual = raiz->pontoNo;
 
-  // Atualiza o sucessor e o predecessor com base no nó atual
   if (pontoAtual->latitude <= latitude && pontoAtual->longitude <= longitude) {
     *predecessor = raiz;
     encontrarSucessorEPredecessor(raiz->direita, latitude, longitude, successor,
@@ -69,10 +65,9 @@ void encontrarSucessorEPredecessor(no *raiz, float latitude, float longitude,
                                   successor, predecessor, profundidade + 1);
   }
 
-  // Verifica se a busca deve continuar para a esquerda ou direita da árvore
   int dimensaoAtual =
       profundidade %
-      2; // Alternando entre latitude (0) e longitude (1) para pontos 2D
+      2; 
   if (dimensaoAtual == 0) {
     if (latitude < pontoAtual->latitude) {
       encontrarSucessorEPredecessor(raiz->esquerda, latitude, longitude,
@@ -92,7 +87,6 @@ void encontrarSucessorEPredecessor(no *raiz, float latitude, float longitude,
   }
 }
 
-// Função para liberar a memória ocupada pela KD-Tree
 void freeTree(no *raiz) {
   if (raiz == NULL) {
     return;
@@ -104,7 +98,6 @@ void freeTree(no *raiz) {
 }
 
 int main() {
-  // Exemplo de uso da KD-Tree com nós 2D
 
   struct municipio municipios[10] = {
       {1, "Sao Paulo", 2.5, 3.8, "Sim", 35, "SP", 7107, "Sudeste", 11, "GMT-3"},
